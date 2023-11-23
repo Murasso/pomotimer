@@ -1,0 +1,24 @@
+<%= stylesheet_pack_tag 'users', media: 'all' %>
+<div class="container-fluid" id="data-bg">
+  <div class="row justify-content-center align-items-center" style="height:100vh;">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card card-block" style="background-color: white; color: black; border-radius: 25px;">
+        <div class="card-body text-center">
+
+          <!-- Transparent Navigation Links -->
+          <div class="navigation-links">
+            <%= link_to 'Week',  week_user_path(current_user.id), class: 'btn btn-outline-primary btn-transparent' %>
+            <%= link_to 'Month',  month_user_path(current_user.id), class: 'btn btn-outline-primary btn-transparent' %>
+            <%= link_to 'Year',  year_user_path(current_user.id), class: 'btn btn-outline-primary btn-transparent' %>
+          </div>
+
+          <!-- Chart -->
+          <%= column_chart @data,
+          title: "The monthly amount of study",
+          colors: ['green'],
+          suffix: "min" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

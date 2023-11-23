@@ -1,0 +1,277 @@
+<div class="container-fluid pomodoro-background justify-content-center align-items-center" style="">
+  <div class="row justify-content-center align-items-center" id="pomodoro-row">
+    <div class="col-12 col-md-8 col-lg-6 text-center" id="pomodoro-col" style="border-radius: 25px;">
+      <div class="col">
+        <h1 id="pomodoro">Pomodoro</h1>
+        <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="alarmCheckbox" onclick="toggleAlarm()">
+              <label class="form-check-label" for="alarmCheckbox">
+                <i id="alarmIcon" class="fas fa-bell-slash"></i>
+                <h6 id="muted">muted</h6>
+              </label>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-expand-lg navbar-light text-light">
+        <div class="container-fluid justify-content-center">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist" style="background-color:rgb(255,255,255,0.35); border-radius: 25px;">
+            <a class="nav-item nav-link active" id="nav-1-tab" data-toggle="tab" href="#nav-pomodoro" role="tab" aria-controls="nav-pomodoro" aria-selected="true" onclick="stopTimer()" style="color: black; border-radius: 25px;">Pomodoro</a>
+            <a class="nav-item nav-link" id="nav-2-tab" data-toggle="tab" href="#nav-shortbreak" role="tab" aria-controls="nav-shortbreak" aria-selected="false" onclick="stopTimer()" style="color: black; border-radius: 25px;">Short break</a>
+            <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-longbreak" role="tab" aria-controls="nav-longbreak" aria-selected="false" onclick="stopTimer()" style="color: black; border-radius: 25px;">Long break</a>
+            <!--<a class="nav-item nav-link" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="false" onclick="stopTimer()" style="color: grey; border-radius: 25px;"><i class="fa-solid fa-gear"></i></a>-->
+          </div>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-pomodoro" role="tabpanel" aria-labelledby="nav-pomodoro-tab">
+          <div class="button-container">
+                <button type="button" id="startButton" class="btn btn" onclick="startTimer(25, 5, 'Time is up! Take a 5-minute break.', 1)">Start</button>
+                <button type="button" id="pauseButton" class="btn btn" onclick="pauseTimer()">Pause</button>
+                <button type="button" id="stopButton" class="btn btn" onclick="stopTimer(25, 5, 1)" data-toggle="modal" data-target="#selectModal">Stop</button>
+
+          </div>
+          <p id="timer1" class="timer">25:00</p>
+
+        </div>
+        <div class="tab-pane fade" id="nav-shortbreak" role="tabpanel" aria-labelledby="nav-shortbreak-tab">
+          <div class="button-container">
+            <button type="button" id="startButton" class="btn btn" onclick="startTimer(5,25, 'Break is over, back to work!', 2)">Start</button>
+            <button type="button" id="pauseButton" class="btn btn" onclick="pauseTimer()">Pause</button>
+            <button type="button" id="stopButton" class="btn btn" onclick="stopTimer(5,25,2)" data-toggle="modal" data-target="#selectModal">Stop</button>
+
+
+
+
+          </div>
+          <p id="timer2" class="timer">5:00</p>
+
+        </div>
+        <div class="tab-pane fade" id="nav-longbreak" role="tabpanel" aria-labelledby="nav-longbreak-tab">
+          <div class="button-container">
+            <button type="button" id="startButton" class="btn btn" onclick="startTimer(15,25,'Break is over, back to work!',3)">Start</button>
+            <button type="button" id="pauseButton" class="btn btn" onclick="pauseTimer()">Pause</button>
+            <button type="button" id="stopButton" class="btn btn" onclick="stopTimer(15,25,3)" data-toggle="modal" data-target="#selectModal">Stop</button>
+
+
+
+
+          </div>
+          <p id="timer3" class="timer">15:00</p>
+
+        </div>
+        <!--<div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab">-->
+        <!--    Sorry. This feature is not available yet-->
+        <!--</div>-->
+          <p id="studySessions">Study Sessions: 0</p>
+          <%= audio_tag("lofi5.mp3", controls: true, loop: true) %>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ... (your modal code) ... -->
+
+
+  <div class="modal fade" id="selectModal" role="dialog" aria-hidden="true">
+  <% if user_signed_in? %>
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+        <h4 class="modal-title">Save your study?</h4>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Do not save</button>
+        </div>
+      </div>
+    </div>
+  <%else%>
+  <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+        <h4 class="modal-title">
+          Looks like you are not signed in...
+        </h4>
+        </div>
+        <div class="modal-body">
+            <%= link_to "Sign in?",new_user_session_path, class: "btn btn-primary btn-lg" %>
+        </div>
+      </div>
+    </div>
+  <div>
+
+  </div>
+  <%end%>
+  </div>
+
+
+  <div id="myModal" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+
+        <h4 class="modal-title">Study Session</h4>
+        </div>
+        <div class="modal-body">
+
+          <%= form_with model: StudyRecord.new, method: :post do |f| %>
+            <div class="form-group">
+              <%= f.label :title %>
+              <%= f.text_field :title, class: 'form-control', value: Date.current %>
+            </div>
+            <div class="form-group">
+              <%= f.label :comment %>
+              <%= f.text_area :body, class: 'form-control', rows: 5, :placeholder => 'Finished reading 5 pages!'%>
+            </div>
+            <div class="form-group">
+              <%= f.hidden_field :num_of_session, id: "study_sessions_field", class: 'form-control', min: 0%>
+            </div>
+            <%= audio_tag("correct_sound.wav",id:"audio") %>
+
+            <%= f.submit "Share", class: 'btn btn-primary'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+<script>
+  var interval;
+  var seconds = 0;
+  var minutes;
+  var breakTime = false;
+  var studySessions =  0; // Retrieve study sessions count from local storage
+  var global_minutes;
+  var alarmOn = false; // Set this to true if you want to enable the alarm
+  var timerStarted = false; // Variable to track if the timer has started
+
+  // Initial button states
+  document.getElementById('stopButton').disabled = true;
+  document.getElementById('pauseButton').disabled = true;
+
+  // Initial alarm icon state
+  updateAlarmIcon();
+
+  function switchTab(key) {
+    if (Number(key)==1) {
+      // Set default clock value
+      document.getElementById("timer1").innerText = "25:00";
+      document.getElementById("timer2").innerText = "5:00";
+      document.getElementById("timer3").innerText = "15:00";
+      $('.nav-tabs a[href="#nav-shortbreak"]').tab('show');
+      timerStarted = false; // Reset timerStarted to false after switching tabs
+    } else {
+      // Switch tabs without asking if the timer hasn't started
+      document.getElementById("timer1").innerText = "25:00";
+      document.getElementById("timer2").innerText = "5:00";
+      document.getElementById("timer3").innerText = "15:00";
+      $('.nav-tabs a[href="#nav-pomodoro"]').tab('show');
+    }
+  }
+
+  function updateButtonState(start, pause, stop) {
+    document.getElementById('startButton').disabled = start;
+    document.getElementById('pauseButton').disabled = pause;
+    document.getElementById('stopButton').disabled = stop;
+  }
+
+  function updateTimerDisplay(key) {
+    document.getElementById("timer" + key).innerText = minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+    document.getElementById('title').innerText = minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+  }
+
+  function updateStudySessionsDisplay() {
+    document.getElementById('studySessions').innerText = "Study Sessions: " + studySessions;
+  }
+
+  function updateAlarmIcon() {
+    var icon = document.getElementById('alarmIcon');
+    icon.className = alarmOn ? 'fas fa-bell' : 'fas fa-bell-slash';
+    document.getElementById('muted').innerText = alarmOn ? 'sound on':'muted';
+  }
+
+  function toggleAlarm() {
+    alarmOn = !alarmOn;
+    updateAlarmIcon();
+  }
+
+  function startTimer(studyMinutes, breakMinutes, message, key) {
+    minutes = (typeof minutes === "undefined") ? studyMinutes : minutes;
+    updateButtonState(true, false, false);
+    clearInterval(interval);
+    timerStarted = true; // Set timerStarted to true
+
+    interval = setInterval(function () {
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(interval);
+          if (alarmOn) {
+            document.querySelector("#audio").play();
+          } else{
+            alert(message)
+          }
+            document.getElementById("pomodoro").innerText = message;
+
+            studySessions=(Number(key)==1)?studySessions+1:studySessions;
+            console.log(Number(key));
+            minutes = studyMinutes;
+            switchTab(key);
+
+            localStorage.setItem('studySessions', studySessions);
+            
+            updateStudySessionsDisplay();
+            timerStarted = false; 
+            // Store study sessions count in local storage
+
+            seconds = 0;
+        } else {
+          minutes--;
+          seconds = 59;
+        }
+      } else {
+        seconds--;
+      }
+
+      updateTimerDisplay(key);
+
+      global_minutes = minutes;
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    updateButtonState(false, true, false);
+    clearInterval(interval);
+  }
+
+  function stopTimer(studyMinutes, breakMinutes, key) {
+      updateButtonState(false, false, false);
+      clearInterval(interval);
+      timerStarted = false; // Reset timerStarted to false
+      document.getElementById("study_sessions_field").value = studySessions * 30 + (25 - minutes);
+      minutes = studyMinutes;
+      seconds = 0;
+      breakTime = false;
+      timerStarted = false;
+      // updateTimerDisplay(key);
+
+      updateStudySessionsDisplay();
+      localStorage.setItem('studySessions', studySessions); // Store study sessions count in local storage
+      document.getElementById("timer1").innerText = "25:00";
+      document.getElementById("timer2").innerText = "5:00";
+      document.getElementById("timer3").innerText = "15:00";
+   
+  }
+
+  audiojs.events.ready(function () {
+    var as = audiojs.createAll();
+  });
+</script>

@@ -1,0 +1,15 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.btn-transparent {
+  background-color: transparent;
+  border-color: transparent;
+  color: #007bff; /* Change this to the desired link color */
+}
+
+/* Optionally, you can add some spacing between the buttons */
+.navigation-links {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px; /* Adjust this value as needed */
+}

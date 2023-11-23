@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: image-url('desktop-wallpaper-lofi-aesthetic-purple-lofi.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+//   background-image: image-url('desktop-wallpaper-lofi-aesthetic-purple-lofi.jpg');
+}
+
+
+
+.hero {
+    padding: 50px 0;
+    
+    color: #ffffff; /* Light text */
+}
+.hero h1 {
+    font-size: 2.5em;
+}
+.hero p {
+    font-size: 1.2em;
+}
+section {
+    padding: 50px 0;
+}
+
+#welcome{
+  text-shadow: 2px 2px 2px grey;
+}
+audio{
+  opacity: 60%;
+}
+#home-page-lower{
+  
+   background-color: rgba(237, 237, 237, 0.7);
+  
+}
+.pomodoro-background {
+    // background-image: image-url('desktop-wallpaper-lofi-aesthetic-purple-lofi.jpg');
+    // background-position: center center;
+    color: rgba(255, 255, 255, 0.7);
+    // background-size: cover;
+ 
+}
+.timer {
+  font-size: 10em;
+}
+#startButton{
+    text-shadow: 2px 2px 2px grey;
+    color: rgba(255, 255, 255, 0.8);
+    font-size:3rem;
+}
+/* When the screen size is less than 600px, make the timer text smaller */
+#stopButton{
+    text-shadow: 2px 2px 2px grey;
+    color: rgba(255, 255, 255, 0.8);
+    font-size:3rem;
+}
+/* When the screen size is less than 600px, make the timer text smaller */
+#pauseButton{
+    text-shadow: 2px 2px 2px grey;
+    color: rgba(255, 255, 255, 0.8);
+    font-size:3rem;
+}
+#studySessions{
+    color:white;
+}
+
+
+#pomodoro{
+  text-shadow: 2px 2px 2px grey;
+  color: rgba(255, 255, 255, 0.8);
+
+}
+#start-stop-card{
+  background-color: rgba(255, 255, 255, 0.2);
+  width:100%;
+}
+.register-back{
+    background-color:rgba(255, 255, 255, 0.8);
+}
+
+/* When the screen size is less than 600px, make the timer text smaller */
+@media only screen and (max-width: 600px) {
+    
+    body{
+        height:100vh;
+    }
+  .timer {
+    font-size: 4em;
+  }
+  #pomodoro-row{
+
+  }
+    #startButton{
+
+     font-size:30px
+    }
+    /* When the screen size is less than 600px, make the timer text smaller */
+    #stopButton{
+
+         font-size:30px
+    }
+    #pauseButton{
+
+         font-size:30px
+    }
+    #pomodoro-row{
+
+    padding-top:30%;
+}
+
+}

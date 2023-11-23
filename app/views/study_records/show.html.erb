@@ -1,0 +1,57 @@
+<style>
+.card {
+  transition: transform 0.5s;
+  width: 60%;
+  height: 50%;
+  margin: 20px;
+  background-color: white;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  transform-origin: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <% @study_records.each do |study_record| %>
+      <div class="card text-center" style="max-width: 40rem;">
+        <div class="card-body">
+          <%= link_to image_tag(study_record.user.get_profile_image(300,300), class: "media-object", style: "width:60px"), study_record_path(study_record.user.id) %>
+          <div class="media-body" style="padding-top: 10px;">
+              <h4 class="media-heading">
+                <% if current_user==study_record.user %>
+                  <%= link_to study_record.title, user_path(study_record.user.id)%>
+                <%else%>
+                  study_record.title
+                <% end %>
+              </h4>
+            <p><%= study_record.body %></p>
+            <p><small>
+              <%if study_record.num_of_session==1%>
+                <%= study_record.num_of_session.to_i %> minute
+              <%else%>
+                <%= study_record.num_of_session.to_i %> minutes
+              <%end%>
+            </small></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
