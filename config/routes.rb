@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :study_records, only: [:new, :create, :index, :show]
+  resources :study_records, only: [:new, :create, :show]
   
   get "homes/about" => "homes#about", as: "about"
 end

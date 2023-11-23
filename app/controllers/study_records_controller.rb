@@ -1,7 +1,5 @@
 class StudyRecordsController < ApplicationController
-  def index
-    @study_records=StudyRecord.all
-  end
+  before_action :is_matching_login_user, only: [:show]
   
   def new
     @study_record = StudyRecord.new
@@ -21,5 +19,12 @@ class StudyRecordsController < ApplicationController
 
   def study_record_params
     params.require(:study_record).permit(:title, :body, :num_of_session)
+  end
+  
+  def is_matching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to study_record_path(current_user.id)
+    end
   end
 end
