@@ -1,8 +1,8 @@
 <div class="container-fluid pomodoro-background justify-content-center align-items-center" style="">
   <div class="row justify-content-center align-items-center" id="pomodoro-row">
-    <div class="col-12 col-md-8 col-lg-6 text-center" id="pomodoro-col" style="border-radius: 25px;">
+    <div class="col-12 col-sm-12 col-md-8 col-lg-6 text-center" id="pomodoro-col" style="border-radius: 25px;">
       <div class="col">
-        <h1 id="pomodoro">Pomodoro</h1>
+        <h1 id="pomodoro">Pomodoro Timer</h1>
         <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" id="alarmCheckbox" onclick="toggleAlarm()">
               <label class="form-check-label" for="alarmCheckbox">
@@ -80,7 +80,7 @@
       <div class="modal-content">
         <div class="modal-header">
 
-        <h4 class="modal-title">Save your study?</h4>
+        <h4 class="modal-title">Save your study notes for better recall</h4>
         </div>
         <div class="modal-body">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>
@@ -127,14 +127,14 @@
             </div>
             <div class="form-group">
               <%= f.label :comment %>
-              <%= f.text_area :body, class: 'form-control', rows: 5, :placeholder => 'Finished reading 5 pages!'%>
+              <%= f.text_area :body, class: 'form-control', rows: 5, :placeholder => 'Recap what you have covered in your study!'%>
             </div>
             <div class="form-group">
               <%= f.hidden_field :num_of_session, id: "study_sessions_field", class: 'form-control', min: 0%>
             </div>
             <%= audio_tag("correct_sound.wav",id:"audio") %>
 
-            <%= f.submit "Share", class: 'btn btn-primary'%>
+            <%= f.submit "Save", class: 'btn btn-primary'%>
           <% end %>
         </div>
       </div>
@@ -221,14 +221,14 @@
             document.getElementById("pomodoro").innerText = message;
 
             studySessions=(key==1)?studySessions+1:studySessions;
-        
+
             minutes = studyMinutes;
             switchTab(key);
 
             localStorage.setItem('studySessions', studySessions);
-            
+
             updateStudySessionsDisplay();
-            timerStarted = false; 
+            timerStarted = false;
             // Store study sessions count in local storage
 
             seconds = 0;
@@ -264,7 +264,7 @@
       document.getElementById("timer1").innerText = "25:00";
       document.getElementById("timer2").innerText = "5:00";
       document.getElementById("timer3").innerText = "15:00";
-   
+
   }
 
   audiojs.events.ready(function () {
