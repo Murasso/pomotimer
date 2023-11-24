@@ -256,7 +256,10 @@
       updateButtonState(false, false, false);
       clearInterval(interval);
       timerStarted = false; // Reset timerStarted to false
-      document.getElementById("study_sessions_field").value = studySessions * 30 + 25 - minutes;
+    
+      document.getElementById("study_sessions_field").value = studySessions * 30 + Number(studyMinute) - minutes;
+  
+      
       minutes = studyMinutes;
       seconds = 0;
       breakTime = false;
