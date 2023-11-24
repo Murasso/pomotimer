@@ -15,9 +15,9 @@
       <nav class="navbar navbar-expand-lg navbar-light text-light">
         <div class="container-fluid justify-content-center">
           <div class="nav nav-tabs" id="nav-tab" role="tablist" style="background-color:rgb(255,255,255,0.35); border-radius: 25px;">
-            <a class="nav-item nav-link active" id="nav-1-tab" data-toggle="tab" href="#nav-pomodoro" role="tab" aria-controls="nav-pomodoro" aria-selected="true" onclick="stopTimer()" style="color: black; border-radius: 25px;">Pomodoro</a>
-            <a class="nav-item nav-link" id="nav-2-tab" data-toggle="tab" href="#nav-shortbreak" role="tab" aria-controls="nav-shortbreak" aria-selected="false" onclick="stopTimer()" style="color: black; border-radius: 25px;">Short break</a>
-            <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-longbreak" role="tab" aria-controls="nav-longbreak" aria-selected="false" onclick="stopTimer()" style="color: black; border-radius: 25px;">Long break</a>
+            <a class="nav-item nav-link active" id="nav-1-tab" data-toggle="tab" href="#nav-pomodoro" role="tab" aria-controls="nav-pomodoro" aria-selected="true" onclick="stopTimer();" style="color: black; border-radius: 25px;">Pomodoro</a>
+            <a class="nav-item nav-link" id="nav-2-tab" data-toggle="tab" href="#nav-shortbreak" role="tab" aria-controls="nav-shortbreak" aria-selected="false" onclick="stopTimer();startTimer(5,25, 'Break is over, back to work!', 2)" style="color: black; border-radius: 25px;">Short break</a>
+            <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#nav-longbreak" role="tab" aria-controls="nav-longbreak" aria-selected="false" onclick="stopTimer();startTimer(15,25, 'Break is over, back to work!', 3)" style="color: black; border-radius: 25px;">Long break</a>
             <!--<a class="nav-item nav-link" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="false" onclick="stopTimer()" style="color: grey; border-radius: 25px;"><i class="fa-solid fa-gear"></i></a>-->
           </div>
         </div>
@@ -28,7 +28,6 @@
                 <button type="button" id="startButton" class="btn btn" onclick="startTimer(25, 5, 'Time is up! Take a 5-minute break.', 1)">Start</button>
                 <button type="button" id="pauseButton" class="btn btn" onclick="pauseTimer()">Pause</button>
                 <button type="button" id="stopButton" class="btn btn" onclick="stopTimer(25, 5, 1)" data-toggle="modal" data-target="#selectModal">Stop</button>
-
           </div>
           <p id="timer1" class="timer">25:00</p>
 
@@ -131,7 +130,7 @@
               <%= f.text_area :body, class: 'form-control', rows: 5, :placeholder => 'Finished reading 5 pages!'%>
             </div>
             <div class="form-group">
-              <%= f.hidden_field :num_of_session, id: "study_sessions_field", class: 'form-control', min: 0%>
+              <%= f.number_field :num_of_session, id: "study_sessions_field", class: 'form-control', min: 0%>
             </div>
             <%= audio_tag("correct_sound.wav",id:"audio") %>
 
@@ -221,8 +220,8 @@
           }
             document.getElementById("pomodoro").innerText = message;
 
-            studySessions=(Number(key)==1)?studySessions+1:studySessions;
-            console.log(Number(key));
+            studySessions=(key==1)?studySessions+1:studySessions;
+        
             minutes = studyMinutes;
             switchTab(key);
 
@@ -242,7 +241,7 @@
       }
 
       updateTimerDisplay(key);
-
+      updateStudySessionsDisplay();
       global_minutes = minutes;
     }, 1000);
   }
@@ -255,19 +254,13 @@
   function stopTimer(studyMinutes, breakMinutes, key) {
       updateButtonState(false, false, false);
       clearInterval(interval);
+      updateStudySessionsDisplay();
       timerStarted = false; // Reset timerStarted to false
-    
-      document.getElementById("study_sessions_field").value = studySessions * 30 + Number(studyMinute) - minutes;
-  
-      
+      document.getElementById("study_sessions_field").value = studySessions * 25 + studyMinutes - minutes;
       minutes = studyMinutes;
       seconds = 0;
       breakTime = false;
       timerStarted = false;
-      // updateTimerDisplay(key);
-
-      updateStudySessionsDisplay();
-      localStorage.setItem('studySessions', studySessions); // Store study sessions count in local storage
       document.getElementById("timer1").innerText = "25:00";
       document.getElementById("timer2").innerText = "5:00";
       document.getElementById("timer3").innerText = "15:00";
