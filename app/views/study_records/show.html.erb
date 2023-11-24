@@ -35,7 +35,7 @@
           <div class="media-body" style="padding-top: 10px;">
               <h4 class="media-heading">
                 <% if current_user==study_record.user %>
-                  <%= link_to study_record.title, user_path(study_record.user.id)%>
+                  <%= link_to study_record.title, week_user_path(current_user.id)%>
                 <%else%>
                   study_record.title
                 <% end %>
